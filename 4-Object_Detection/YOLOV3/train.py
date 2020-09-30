@@ -12,6 +12,8 @@
 #================================================================
 
 import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import time
 import shutil
 import numpy as np
@@ -39,6 +41,9 @@ for i, conv_tensor in enumerate(conv_tensors):
     output_tensors.append(pred_tensor)
 
 model = tf.keras.Model(input_tensor, output_tensors)
+
+# model.load_weights("./yolov3_voc.weights")   # 是否加载模型   --------
+
 optimizer = tf.keras.optimizers.Adam()
 if os.path.exists(logdir): shutil.rmtree(logdir)
 writer = tf.summary.create_file_writer(logdir)
@@ -87,5 +92,5 @@ def train_step(image_data, target):
 for epoch in range(cfg.TRAIN.EPOCHS):
     for image_data, target in trainset:
         train_step(image_data, target)
-    model.save_weights("./yolov3")
+    model.save_weights("./yolov3_voc")
 

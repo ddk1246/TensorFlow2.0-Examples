@@ -45,7 +45,7 @@ for i, fm in enumerate(feature_maps):
     bbox_tensors.append(bbox_tensor)
 
 model = tf.keras.Model(input_layer, bbox_tensors)
-model.load_weights("./yolov3")
+model.load_weights("./yolov3_127")
 
 with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
     for num, line in enumerate(annotation_file):
@@ -82,6 +82,7 @@ with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
         pred_bbox = model.predict(image_data)
         pred_bbox = [tf.reshape(x, (-1, tf.shape(x)[-1])) for x in pred_bbox]
         pred_bbox = tf.concat(pred_bbox, axis=0)
+        # pred_bbox = tf.concat(pred_bbox, 1)
         bboxes = utils.postprocess_boxes(pred_bbox, image_size, INPUT_SIZE, cfg.TEST.SCORE_THRESHOLD)
         bboxes = utils.nms(bboxes, cfg.TEST.IOU_THRESHOLD, method='nms')
 
