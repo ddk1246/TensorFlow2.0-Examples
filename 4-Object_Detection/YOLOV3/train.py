@@ -12,8 +12,8 @@
 #================================================================
 
 import os
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import time
 import shutil
 import numpy as np
@@ -92,5 +92,4 @@ def train_step(image_data, target):
 for epoch in range(cfg.TRAIN.EPOCHS):
     for image_data, target in trainset:
         train_step(image_data, target)
-    model.save_weights("./yolov3_voc")
-
+        model.save_weights("./models/yolov3_voc")
