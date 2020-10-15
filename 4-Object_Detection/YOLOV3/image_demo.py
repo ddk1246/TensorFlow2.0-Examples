@@ -19,7 +19,8 @@ from core.yolov3 import YOLOv3, decode
 from PIL import Image
 
 input_size   = 416
-image_path   = "./docs/kite.jpg"
+# image_path   = "./docs/kite.jpg"
+image_path   = '/home/wzk/下载/照片1/DCIM/Camera/IMG_19700101_0800_Burst01.jpg'
 
 input_layer  = tf.keras.layers.Input([input_size, input_size, 3])
 feature_maps = YOLOv3(input_layer)
@@ -37,7 +38,8 @@ for i, fm in enumerate(feature_maps):
     bbox_tensors.append(bbox_tensor)
 
 model = tf.keras.Model(input_layer, bbox_tensors)
-utils.load_weights(model, "./yolov3.weights")
+# utils.load_weights(model, "./models/colorshape.data-00000-of-00001")
+model.load_weights("./models/colorshape")
 model.summary()
 
 pred_bbox = model.predict(image_data)

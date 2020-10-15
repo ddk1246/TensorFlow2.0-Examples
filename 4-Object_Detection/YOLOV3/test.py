@@ -13,6 +13,8 @@
 
 import cv2
 import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import shutil
 import numpy as np
 import tensorflow as tf
@@ -45,7 +47,7 @@ for i, fm in enumerate(feature_maps):
     bbox_tensors.append(bbox_tensor)
 
 model = tf.keras.Model(input_layer, bbox_tensors)
-model.load_weights("./models/yolov3_voc")
+model.load_weights("./models/colorshape_2")
 
 with open(cfg.TEST.ANNOT_PATH, 'r') as annotation_file:
     for num, line in enumerate(annotation_file):
